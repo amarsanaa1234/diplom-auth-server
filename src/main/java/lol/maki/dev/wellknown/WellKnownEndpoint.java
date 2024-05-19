@@ -21,9 +21,6 @@ public class WellKnownEndpoint {
         this.keyPair = props.getKeyPair();
     }
 
-    /**
-     * https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfig
-     */
     @GetMapping(path = {".well-known/openid-configuration", "oauth/token/.well-known/openid-configuration"})
     public Map<String, Object> openIdConfiguration(UriComponentsBuilder builder) {
         return Map.of("issuer", builder.replacePath("oauth/token").build().toString(),
@@ -33,9 +30,6 @@ public class WellKnownEndpoint {
                 "subject_types_supported", List.of("public"));
     }
 
-    /**
-     * https://docs.spring.io/spring-security-oauth2-boot/docs/2.3.x-SNAPSHOT/reference/html5/#oauth2-boot-authorization-server-spring-security-oauth2-resource-server-jwk-set-uri
-     */
     @GetMapping(path = "token_keys")
     public Map<String, Object> tokenKeys() {
         final RSAPublicKey publicKey = (RSAPublicKey) this.keyPair.getPublic();
